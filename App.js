@@ -110,7 +110,7 @@ props.navigation.setOptions({
     headerRight: () => (
       <View style={{ paddingRight: 10 }}>
         <FontAwesome
-          name="FavCountriesScreen"
+          name="star"
           size={24}
           color="black"
           onPress={() => props.navigation.navigate('FavCountriesScreen', {getFavourites})}
@@ -255,7 +255,6 @@ const CountryDetailsScreen = (props) => {
       </ScrollView>
       <View style={styles.buttons}>
         <Button title="Back" onPress={() => props.navigation.goBack()} />
-        <Button title="Home" onPress={() => props.navigation.popToTop()} />
         
       </View>
     </View>
@@ -266,7 +265,7 @@ const Stack = createStackNavigator();
 
 const StackNavigator1 = () => {
   return (
-<Stack.Navigator initialRouteName={'Home'}>
+<Stack.Navigator initialRouteName={'CountriesScreen'}>
         
         <Stack.Screen
           name="CountriesScreen"
@@ -341,62 +340,15 @@ const StackNavigator1 = () => {
 
 
 const StackNavigator2 = () => {
-  return (
-<Stack.Navigator initialRouteName={'Home'}>
-        
-        <Stack.Screen
-          name="FavCountriesScreen"
-          options={{ title: 'Favourite Countries', headerTitleAlign: 'center' }}>
-          {(props) => (
-            <FavCountries
-              {...props}
-             
-              url2={'https://world-population.p.rapidapi.com/allcountriesname'}
-              keyObj2={{
-                method: 'GET',
-                headers: {
-                  'x-rapidapi-key':
-                    '19449ad71bmsh6ef1edc74267936p131d7ajsn96f451de877a',
-                  'x-rapidapi-host': 'world-population.p.rapidapi.com',
-                },
-              }}
-            />
-          )}
-        </Stack.Screen>
-        <Stack.Screen
-          name="CountriesDetailsScreen"
-          options={{ title: 'Countries', headerTitleAlign: 'center' }}>
-          {(props) => (
-            <CountryDetailsScreen
-              {...props}
-              url1={'https://covid-19-data.p.rapidapi.com/country?name='}
-              url2={
-                'https://world-population.p.rapidapi.com/population?country_name='
-              }
-              keyObj1={{
-                method: 'GET',
-                headers: {
-                  'x-rapidapi-key':
-                    '19449ad71bmsh6ef1edc74267936p131d7ajsn96f451de877a',
-                  'x-rapidapi-host': 'covid-19-data.p.rapidapi.com',
-                },
-              }}
-              keyObj2={{
-                method: 'GET',
-                headers: {
-                  'x-rapidapi-key':
-                    '19449ad71bmsh6ef1edc74267936p131d7ajsn96f451de877a',
-                  'x-rapidapi-host': 'world-population.p.rapidapi.com',
-                },
-              }}
-            />
-          )}
-        </Stack.Screen>
+  const stack =  StackNavigator1;
+  return ( 
+<Stack.Navigator initialRouteName={'FavCountriesScreen'}>    
+      {stack}
       </Stack.Navigator>
    )
   }
 
-
+ 
 const Drawer = createDrawerNavigator();
 
  const DrawerNavigator = () => {
@@ -428,7 +380,7 @@ const Drawer = createDrawerNavigator();
           )}
         </Drawer.Screen>
         <Drawer.Screen name="Country Statistics" component={StackNavigator1} />
-        <Drawer.Screen name="Favourite Countries" component={StackNavigator2} />
+        <Drawer.Screen name="Favourite Countries" component={StackNavigator1} />
       </Drawer.Navigator>
   );
 }
